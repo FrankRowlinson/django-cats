@@ -3,7 +3,10 @@ from django.shortcuts import render
 
 
 def main(request):
-    return HttpResponse("Main page filled with beautiful cats")
+    return render(request, 'cats/index.html', {'title': 'Main page...'})
+
+def about(request):
+    return render(request, 'cats/about.html', {'title': 'About page...'})
 
 def pictures(request, category):
     if category not in ("funny", "serious", "cute"):

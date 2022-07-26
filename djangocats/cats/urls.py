@@ -6,4 +6,5 @@ from .views import *
 urlpatterns = [
     path('', main),
     path('pics/<str:category>/', pictures),
+    path('about/', about),
 ]
