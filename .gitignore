@@ -130,3 +130,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Bootstrap js folder because I don't use it right know
+js/
