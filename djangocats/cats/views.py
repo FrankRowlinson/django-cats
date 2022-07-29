@@ -3,10 +3,12 @@ from django.shortcuts import render
 
 
 def main(request):
-    return render(request, 'cats/index.html', {'title': 'Main page...'})
+    context = {'title': 'coolcats! main page'}
+    return render(request, 'cats/index.html', context=context)
 
 def about(request):
-    return render(request, 'cats/about.html', {'title': 'About page...'})
+    context = {'title': 'About coolcats!'}
+    return render(request, 'cats/about.html', context=context)
 
 def pictures(request, category):
     if category not in ("funny", "serious", "cute"):
