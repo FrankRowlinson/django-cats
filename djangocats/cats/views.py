@@ -1,5 +1,6 @@
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
+from cats.models import Cat
 
 
 def main(request):
@@ -7,7 +8,11 @@ def main(request):
     return render(request, 'cats/index.html', context=context)
 
 def about(request):
-    context = {'title': 'About coolcats!'}
+    context = {
+        'title': 'About coolcats!',
+        'category_count': len(Cat.CATEGORY_CHOICES),
+        'picture_count': Cat.objects.count()
+        }
     return render(request, 'cats/about.html', context=context)
 
 def pictures(request, category):
