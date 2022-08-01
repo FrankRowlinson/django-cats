@@ -17,9 +17,10 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+    {% block navbar %}
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href={% url 'home' %}>
                 <img src={% static 'cats/images/coolkisa.png' %} alt="" height="30"
                     class="d-inline-block align-text-top">
                 coolcats!
@@ -37,23 +38,25 @@
                             Categories
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Funny</a></li>
-                            <li><a class="dropdown-item" href="#">Serious</a></li>
-                            <li><a class="dropdown-item" href="#">Cute</a></li>
+                            {% for category in categories %}
+                            <li><a class="dropdown-item" href={% url 'pics' category %}>{{ category|capfirst }}</a></li>
+                            {% endfor %}
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href={% url 'about' %}>About</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="..find cats that you like!.."
                         aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit"><i style="font-size: 19px" class="bi bi-search-heart"></i></button>
+                    <button class="btn btn-outline-light" type="submit"><i style="font-size: 19px"
+                            class="bi bi-search-heart"></i></button>
                 </form>
             </div>
         </div>
     </nav>
+    {% endblock %}
     <div class="container">
         {% block content %}
         {% endblock %}
