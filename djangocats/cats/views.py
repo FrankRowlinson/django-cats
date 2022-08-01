@@ -1,9 +1,9 @@
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
-from cats.models import Cat
+from cats.models import *
 
 
-categories = [category[0] for category in Cat.CATEGORY_CHOICES]
+categories = [category.name for category in Category.objects.order_by('name')]
 
 
 def main(request):
@@ -13,7 +13,7 @@ def main(request):
 def about(request):
     context = {
         'title': 'About coolcats!',
-        'category_count': len(Cat.CATEGORY_CHOICES),
+        'category_count': Category.objects.count(),
         'picture_count': Cat.objects.count(),
         'categories': categories
         }
