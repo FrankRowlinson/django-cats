@@ -26,9 +26,15 @@ def about(request):
 def show_category(request, name):
     if name not in category_names:
         raise Http404
-        
-    return HttpResponse(f"""<h1>Here you can see all pictures of cats 
-    in category {name}</h1>""")
+    posts = Cat.objects.filter(category=Category.objects.get(name=name))
+    context = {
+        'title': f'coolcats! {name.capitalize()}',
+        'name': name,
+        'categories': categories,
+        'picture_count': posts.count(),
+        'posts': posts,
+    } 
+    return render(request, 'cats/category.html', context=context)
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("We don't have such kitties :C")
