@@ -2,7 +2,7 @@
 
 {% block content %}
 <p>Choose random kitty down below, use search field at the top, or discover some fluffballs in different categories!</p>
-<div id="main-page-carousel" class="carousel slide my-3" data-bs-ride="false">
+<div id="main-page-carousel" class="carousel slide my-3" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#main-page-carousel" data-bs-slide-to="0" class="active"
             aria-current="true" aria-label="Slide 1"></button>
@@ -17,7 +17,7 @@
                 <div class="carousel-item">
             {% endif %}
                 <img src="https://picsum.photos/600/300" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block bg-dark" style="--bs-bg-opacity: .5;">
                         <h5>{{ cat.title }}</h5>
                         <p>{{ cat.description|truncatechars:50 }}</p>
                     </div>
