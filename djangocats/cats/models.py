@@ -12,7 +12,10 @@ class Cat(models.Model):
     is_public = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f"{self.id}) {self.title}"
+        return f"{self.title}"
+
+    class Meta:
+        ordering = ['time_created']
 
 
 class Category(models.Model):
@@ -23,4 +26,8 @@ class Category(models.Model):
     
     def get_absolute_url(self):
         return reverse("category", kwargs={"name": self.name})
-    
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
