@@ -1,7 +1,9 @@
 {% extends 'cats/base.html' %}
 {% load static %}
+{% load cat_tags %}
 
 {% block content %}
+{% get_categories show_parameter='count' as category_count %}
 <div class="container pb-4">
     <div class="row gx-0 justify-content-lg-center d-flex align-items-center">
         <div class="col-lg-4 col-md-6 col-12 h2 text-center">Currently {{ picture_count }} relatable cat pictures are here
