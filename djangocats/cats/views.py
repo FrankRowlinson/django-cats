@@ -1,6 +1,7 @@
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
-from cats.models import *
+from .models import *
+from cats.forms import *
 
 
 category_names = [category.name for category in Category.objects.order_by('name')]
@@ -33,8 +34,14 @@ def show_category(request, name):
     return render(request, 'cats/category.html', context=context)
 
 def add_post(request):
+    if request.method == 'POST':
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = AddPostForm()
     context = {
-        
+        'form': form,
     }
     return render(request, 'cats/addpost.html', context=context)
 
