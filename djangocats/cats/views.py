@@ -32,5 +32,11 @@ def show_category(request, name):
     } 
     return render(request, 'cats/category.html', context=context)
 
+def add_post(request):
+    context = {
+        
+    }
+    return render(request, 'cats/addpost.html', context=context)
+
 def page_not_found(request, exception):
     return HttpResponseNotFound("We don't have such kitties :C")
