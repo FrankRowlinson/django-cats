@@ -42,6 +42,7 @@ def add_post(request):
         form = AddPostForm()
     context = {
         'form': form,
+        'title': "Add kitty cat to our database!",
     }
     return render(request, 'cats/addpost.html', context=context)
 

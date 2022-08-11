@@ -21,13 +21,5 @@ class AddPostForm(forms.Form):
         required=False, 
         initial=True
         )
-    
-    class Meta:
-        fields = ('title', 'description', 'category', 'is_public')
-        widget = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-control'}),
-            'is_public': forms.CheckboxInput(attrs={'class': 'form-control'}),
-        }
+
 

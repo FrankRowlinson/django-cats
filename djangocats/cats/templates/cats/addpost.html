@@ -1,18 +1,25 @@
 {% extends 'cats/base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
-<div class="row justify-content-center my-5">
-    <div class="col-lg-6">
-        <form action={% url 'addpost' %} method="post">
-            {% csrf_token %}
-            <label class='form-label' for={{ form.title.id_for_label }}>{{ form.title.label }}</label>
-            {{ form.title }}
-            <label class='form-label' for={{ form.description.id_for_label }}>{{ form.description.label }}</label> 
-            {{ form.description }}
-            <input class="btn btn-success" type="submit" value="Submit kitty!">
-        </form>
-    </div>
+
+<div class="container mb-5">
+    <form action={% url 'addpost' %} method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-row">
+            {% if field.label == "Description" %}
+            <div class="col-md-6">
+            {% else %}
+            <div class="col-md-3">
+            {% endif %}
+                {{ field|as_crispy_field }}
+            </div>
+        </div>
+        {% endfor %}
+        <button class="btn btn-success" type="submit">Submit!</button>
+    </form>
 </div>
+
 
 {% endblock %}
