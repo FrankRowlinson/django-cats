@@ -1,5 +1,5 @@
 from django.http import Http404, HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from cats.forms import *
 
@@ -35,11 +35,13 @@ def show_category(request, name):
 
 def add_post(request):
     if request.method == 'POST':
-        form = AddPostForm(request.POST)
+        form = AddPostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            print(form.cleaned_data)
+            form.save()
+            return redirect('home')
     else:
         form = AddPostForm()
+
     context = {
         'form': form,
         'title': "Add kitty cat to our database!",

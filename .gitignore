@@ -133,3 +133,6 @@ dmypy.json
 
 # Bootstrap js folder because I don't use it right know
 js/
+
+# Media root because contains a lot of images that was used for testing
+media/
