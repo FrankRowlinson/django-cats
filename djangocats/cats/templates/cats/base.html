@@ -64,8 +64,10 @@
     {% endblock %}
     <div class="container">
         <h2 class="text-center border-bottom border-dark my-4 pb-4">{{ title }}</h2>
-        {% block content %}
-        {% endblock %}
+        <div class="container mb-5">
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
     <footer class="container-fluid mt-auto">
         <div class="row bg-dark text-light gy-3 text-center">
