@@ -4,15 +4,16 @@ from .models import *
 from cats.forms import *
 
 
-category_names = [category.name for category in Category.objects.order_by('name')]
+category_names = Category.objects.names()
 
 
 def main(request):
     context = {
-        'title': 'coolcats! Main page', 
-        'rand_cats': Cat.objects.order_by('?')[:3]
+        'title': 'coolcats! Main page',
+        'new': Cat.objects.new(3),
     }
     return render(request, 'cats/index.html', context=context)
+
 
 def about(request):
     context = {
@@ -21,17 +22,19 @@ def about(request):
         }
     return render(request, 'cats/about.html', context=context)
 
+
 def show_category(request, name):
     if name not in category_names:
         raise Http404
-    posts = Cat.objects.filter(category=Category.objects.get(name=name))
+    posts = Cat.objects.by_category(name)
+
     context = {
         'title': f'coolcats! {name.capitalize()}',
         'name': name,
-        'picture_count': posts.count(),
         'posts': posts,
     } 
     return render(request, 'cats/category.html', context=context)
+
 
 def add_post(request):
     if request.method == 'POST':
@@ -47,6 +50,7 @@ def add_post(request):
         'title': "Add kitty cat to our database!",
     }
     return render(request, 'cats/addpost.html', context=context)
+
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("We don't have such kitties :C")
