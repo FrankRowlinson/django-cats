@@ -40,6 +40,11 @@ class PostPage(DetailView):
     slug_url_kwarg = 'cat_slug'
     context_object_name = 'post'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = context['post'].title
+        return context
+
 
 def about(request):
     context = {

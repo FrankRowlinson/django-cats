@@ -8,6 +8,7 @@ class CatAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description', 'is_public')
     list_editable = ('is_public', )
     list_filter = ('is_public', 'time_created')
+    prepopulated_fields = {'slug': ('title', )}
 
 
 class CategoryAdmin(admin.ModelAdmin):

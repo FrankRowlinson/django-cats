@@ -35,13 +35,6 @@ class Cat(models.Model):
     def __str__(self) -> str:
         return f"{self.title}"
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            # Newly created object, set slug
-            self.slug = slugify(self.title)
-
-        super(Cat, self).save(*args, **kwargs)
-    
     def get_absolute_url(self):
         return reverse("post", kwargs={"cat_slug": self.slug})
     
