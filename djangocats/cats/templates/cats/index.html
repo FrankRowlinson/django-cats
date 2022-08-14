@@ -2,48 +2,26 @@
 
 {% block content %}
 <p>
-    Choose random kitty down below, use search field at the top, or discover some fluffballs in different categories!
+    Scroll down for kitties, use search field at the top, or discover some fluffballs in different categories!
 </p>
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-        <div id="main-page-carousel" class="carousel slide my-3" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#main-page-carousel" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#main-page-carousel" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#main-page-carousel" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                {% for cat in new %}
-                {% if forloop.first %}
-                <div class="carousel-item active">
-                    {% else %}
-                    <div class="carousel-item">
-                        {% endif %}
-                        <img src={{ cat.photo.url }} class="d-block w-100 carousel-img" alt="...">
-                        <div class="carousel-caption d-none d-md-block bg-dark" style="--bs-bg-opacity: .5;">
-                            <h5>{{ cat.title }}</h5>
-                            <p>{{ cat.description|truncatechars:50 }}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#main-page-carousel"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#main-page-carousel"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
 
-    {% endblock %}
+{% for post in posts %}
+<div class="row justify-content-center border-bottom border-dark my-2 py-2">
+    <div class="col-md-3">
+        <img src={{ post.photo.url }} alt="" class="w-100">
+    </div>
+    <div class="col-md-5">
+        <h4>
+            {{ post.title }}
+        </h4>
+        <p>
+            {{ post.description|truncatechars:50 }}
+        </p>
+        <a href={{ post.get_absolute_url }} class="btn btn-primary">More...</a>
+    </div>
+</div>
+
+{% endfor %}
+
+
+{% endblock %}
