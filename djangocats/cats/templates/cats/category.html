@@ -10,6 +10,7 @@
     <div class="card-img-overlay">
       <span class="card-title h5 bg-dark p-2" style="--bs-bg-opacity: .5;">{{ post.title }}</span>
     </div>
+    <a href={{ post.get_absolute_url }} class="stretched-link"></a>
   </div>
 </div>
 {% endfor %}

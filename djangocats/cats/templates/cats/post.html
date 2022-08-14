@@ -1,0 +1,17 @@
+{% extends 'cats/base.html' %}
+
+
+{% block title %}
+{% endblock %}
+{% block content %}
+<div class="row justify-content-center pt-4">
+    <div class="col-md-5">
+        <img src={{ post.photo.url }} class="w-100 h-auto pb-3" alt="">
+        <a href={{ request.META.HTTP_REFERER }} class="btn btn-primary">Go back </a>
+    </div>
+    <div class="col-md-5 position-relative">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.description }}</p>
+    </div>
+</div>
+{% endblock %}

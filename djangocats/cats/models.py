@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 # ------ MANAGERS ------
 class CatManager(models.Manager):
@@ -20,18 +21,30 @@ class CategoryManager(models.Manager):
 
 # ------ MODELS ------
 class Cat(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=50)
     description = models.TextField(max_length=250, blank=True)
     photo = models.ImageField(upload_to='pictures/%Y_%m/')
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
     time_created = models.DateTimeField(auto_now_add=True)
     time_edited = models.DateTimeField(auto_now=True)
     is_public = models.BooleanField(default=False)
+    slug = models.SlugField()
 
     objects = CatManager()
 
     def __str__(self) -> str:
         return f"{self.title}"
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            # Newly created object, set slug
+            self.slug = slugify(self.title)
+
+        super(Cat, self).save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse("post", kwargs={"cat_slug": self.slug})
+    
 
     class Meta:
         ordering = ['-time_created']
