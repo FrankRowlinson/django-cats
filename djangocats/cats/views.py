@@ -1,6 +1,6 @@
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 from .models import *
 from cats.forms import *
@@ -46,28 +46,22 @@ class PostPage(DetailView):
         return context
 
 
+class AddPostPage(CreateView):
+    form_class = AddPostForm
+    template_name = 'cats/addpost.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Add kitty cat to our database!"
+        return context
+
+
 def about(request):
     context = {
         'title': 'About coolcats!',
         'picture_count': Cat.objects.count(),
         }
     return render(request, 'cats/about.html', context=context)
-
-
-def add_post(request):
-    if request.method == 'POST':
-        form = AddPostForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = AddPostForm()
-
-    context = {
-        'form': form,
-        'title': "Add kitty cat to our database!",
-    }
-    return render(request, 'cats/addpost.html', context=context)
 
 
 def page_not_found(request, exception):
@@ -93,3 +87,19 @@ def page_not_found(request, exception):
 #         'posts': posts,
 #     } 
 #     return render(request, 'cats/category.html', context=context)
+
+
+# def add_post(request):
+#     if request.method == 'POST':
+#         form = AddPostForm(data=request.POST, files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('home')
+#     else:
+#         form = AddPostForm()
+
+#     context = {
+#         'form': form,
+#         'title': "Add kitty cat to our database!",
+#     }
+#     return render(request, 'cats/addpost.html', context=context)
