@@ -1,0 +1,19 @@
+{% extends 'cats/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-row row">
+                    <div class="col-md-6 offset-md-2 col-lg-4 offset-lg-3">{{ field|as_crispy_field }}</div>
+                </div>
+            {% endfor %}
+            <div class="form-row row">
+                <div class="col-md-4 offset-md-2 col-lg-3 offset-lg-3">
+                    <button class="btn btn-success" type="submit">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

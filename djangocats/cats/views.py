@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import *
 from cats.forms import *
@@ -59,6 +60,21 @@ class AddPostPage(CreateView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Add kitty cat to our database!"
         return context
+
+
+class SignupPage(CreateView):
+    form_class = UserCreationForm
+    template_name = 'cats/signup.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Become a Kittizen!"
+        return context
+
+
+class LoginPage(DetailView):
+    pass
 
 
 def about(request):
