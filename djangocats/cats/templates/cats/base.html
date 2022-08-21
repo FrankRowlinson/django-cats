@@ -76,60 +76,57 @@
                 </div>
             </nav>
         {% endblock %}
-        <div class="container">
-            {% block title %}<h2 class="text-center border-bottom border-dark my-4 pb-4">{{ title }}</h2>{% endblock %}
-            <div class="container mb-5">
-                {% block content %}{% endblock %}
-            </div>
-            <!--pagination-->
-            {% block page_selection %}
-                {% if paginator.num_pages > 1 %}
-                    <nav aria-label="..." class="mb-5">
-                        <ul class="pagination justify-content-center">
-                            {% if page_obj.number == 1 %}
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#">Previous</a>
+        {% block title %}<h2 class="text-center border-bottom border-dark my-4 pb-4">{{ title }}</h2>{% endblock %}
+        <div class="container mb-5">
+            {% block content %}{% endblock %}
+        </div>
+        <!--pagination-->
+        {% block page_selection %}
+            {% if page_obj.has_other_pages %}
+                <nav aria-label="..." class="mb-5">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.number == 1 %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">First</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">First</a>
+                            </li>
+                        {% endif %}
+                        {% for p in paginator.page_range %}
+                            {% if p == page_obj.number %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="?page={{ p }}">{{ p }}</a>
                                 </li>
-                            {% else %}
+                            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    <a class="page-link" href="?page={{ p }}">{{ p }}</a>
                                 </li>
                             {% endif %}
-                            {% for p in paginator.page_range %}
-                                {% if p == page_obj.number %}
-                                    <li class="page-item active">
-                                        <a class="page-link" href="?page={{ p }}">{{ p }}</a>
-                                    </li>
-                                {% else %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ p }}">{{ p }}</a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                            {% if page_obj.number == paginator.num_pages %}
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            {% else %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                                </li>
-                            {% endif %}
-                        </li>
+                        {% endfor %}
+                        {% if page_obj.number == paginator.num_pages %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">Last</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ paginator.num_pages }}">Last</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </nav>
             {% endif %}
-        </div>
-    {% endblock %}
-    {% block footer %}
-        <footer class="container-fluid mt-auto">
-            <div class="row bg-dark text-light gy-3 text-center">
-                <div class="col-12">Created using technologies like Bootstrap 5 (obviously), Django Framework for Python</div>
-                <div class="col-12 mb-3">
-                    Made by FrankRowlinson @ <a class="link-info" href="https://github.com/frankrowlinson">github.com/frankrowlinson</a>
+        {% endblock %}
+        {% block footer %}
+            <footer class="container-fluid mt-auto">
+                <div class="row bg-dark text-light gy-3 text-center">
+                    <div class="col-12">Created using technologies like Bootstrap 5 (obviously), Django Framework for Python</div>
+                    <div class="col-12 mb-3">
+                        Made by FrankRowlinson @ <a class="link-info" href="https://github.com/frankrowlinson">github.com/frankrowlinson</a>
+                    </div>
                 </div>
-            </div>
-        </footer>
-    {% endblock %}
-</body>
+            </footer>
+        {% endblock %}
+    </body>
 </html>
