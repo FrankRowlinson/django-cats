@@ -1,6 +1,8 @@
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import *
 from cats.forms import *
@@ -14,6 +16,7 @@ class MainPage(ListView):
     template_name = 'cats/index.html'
     context_object_name = 'posts'
     extra_context = {'title': 'coolcats! Main page'}
+    paginate_by = 10
 
     def get_queryset(self):
         return Cat.objects.filter(is_public=True)
@@ -24,6 +27,7 @@ class CategoryPage(ListView):
     template_name = 'cats/category.html'
     context_object_name = 'posts'
     allow_empty = False
+    paginate_by = 20
 
     def get_queryset(self):
         return Cat.objects.filter(category__name=self.kwargs['name'], is_public=True)
@@ -49,6 +53,7 @@ class PostPage(DetailView):
 class AddPostPage(CreateView):
     form_class = AddPostForm
     template_name = 'cats/addpost.html'
+    success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
