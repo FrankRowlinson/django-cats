@@ -2,8 +2,10 @@ from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from .models import *
 from cats.forms import *
@@ -51,7 +53,7 @@ class PostPage(DetailView):
         return context
 
 
-class AddPostPage(CreateView):
+class AddPostPage(LoginRequiredMixin, CreateView):
     form_class = AddPostForm
     template_name = 'cats/addpost.html'
     success_url = reverse_lazy('home')
@@ -72,9 +74,23 @@ class SignupPage(CreateView):
         context["title"] = "Become a Kittizen!"
         return context
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
 
-class LoginPage(DetailView):
-    pass
+
+class LoginPage(LoginView):
+    form_class = AuthenticationForm
+    template_name = 'cats/login.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Prove you're Kittizen!"
+        return context
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('home')
 
 
 def about(request):
@@ -83,6 +99,11 @@ def about(request):
         'picture_count': Cat.objects.count(),
         }
     return render(request, 'cats/about.html', context=context)
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 
 def page_not_found(request, exception):
