@@ -5,7 +5,7 @@ from .views import *
 
 
 urlpatterns = [
-    path('', cache_page(60)(MainPage.as_view()), name='home'),
+    path('', MainPage.as_view(), name='home'),
     path('about/', about, name='about'),
     path('category/<str:name>/', CategoryPage.as_view(), name='category'),
     path('addpost/', AddPostPage.as_view(), name='addpost'),

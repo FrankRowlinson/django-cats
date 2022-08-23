@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cats.apps.CatsConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'debug_toolbar',
+    'captcha',
+    'cats.apps.CatsConfig',
 ]
 
 MIDDLEWARE = [

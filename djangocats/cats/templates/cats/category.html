@@ -1,18 +1,17 @@
 {% extends 'cats/base.html' %}
 {% load static %}
-
-
 {% block content %}
-<div class="row">
-{% for post in posts %}
-<div class="col-md-4"><div class="card h-auto text-bg-dark">
-    <img src={{ post.photo.url }} class="card-img" alt="...">
-    <div class="card-img-overlay">
-      <span class="card-title h5 bg-dark p-2" style="--bs-bg-opacity: .5;">{{ post.title }}</span>
-    </div>
-    <a href={{ post.get_absolute_url }} class="stretched-link"></a>
+  <div class="row">
+    {% for post in posts %}
+      <div class="col-md-4">
+        <div class="card h-auto text-bg-dark">
+          <img src={{ post.photo.url }} class="card-img" alt="...">
+          <div class="card-img-overlay">
+            <span class="card-title h5 bg-dark p-2" style="--bs-bg-opacity: .5;">{{ post.title }}</span>
+          </div>
+          <a href={{ post.get_absolute_url }} class="stretched-link"></a>
+        </div>
+      </div>
+    {% endfor %}
   </div>
-</div>
-{% endfor %}
-</div>
 {% endblock %}
